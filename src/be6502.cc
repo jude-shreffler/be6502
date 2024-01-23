@@ -11,13 +11,20 @@ mos65c22 interface;
 uint8_t MemoryRead(uint16_t address);
 void MemoryWrite(uint16_t address, uint8_t value);
 
-int main()
+int main(int argc, char **argv)
 {
+    if (argc != 2)
+    {
+        cout << "Usage: be6502 <rom>" << endl;
+        return 1;
+    }
+
     // load the rom
     ifstream romFile;
-    romFile.open("./rom", ios::binary);
+    romFile.open(argv[1], ios::binary);
     if (!romFile.is_open())
     {
+        cout << "Unable to open rom file: " << argv[1] << endl;
         return 1;
     }
     romFile.read((char *)rom, 0x8000);
